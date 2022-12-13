@@ -1,0 +1,80 @@
+{% extends "cvdp/bt_base_site.html" %}
+{% load static user_tags %}
+{% block content %}
+
+
+<h4 class="text-center mb-5">Welcome to VINCE-NT!</h4>
+
+{% if user.is_authenticated %}
+<div class="alert alert-warning">You are logged in as {{ user.username }}</div>
+{% else %}
+
+<div class="mb-3">
+  <a href="{% url 'login' %}" class="btn btn-primary d-grid w-100">Login</a>
+</div>
+
+
+<div class="mb-3">
+  <a href="{% url 'provider:register' %}" class="btn btn-primary d-grid w-100">Register
+</a>
+</div>
+{% endif %}
+
+
+{% if user.is_staff %}
+<div class="mb-3">
+  <a href="{% url 'admin:index' %}" class="btn btn-primary d-grid w-100">Admin</a>
+</div>
+{% endif %}
+
+{% if user.is_authenticated %}
+{% if dashboard %}
+<div class="mb-3">
+  <a href="{{ dashboard }}" class="btn btn-primary d-grid w-100">My Dashboard</a>
+</div>
+    {% endif %}
+<div class="mb-3">
+  <a href="{% url 'password_change' %}" class="btn btn-outline-primary d-grid w-100">Change Password</a>
+</div>
+
+
+
+{% if user|has_mfa_enabled %}
+<div class="mb-3">
+  <a href="{% url 'provider:remove_mfa' %}" class="btn btn-outline-primary d-grid w-100">Remove MFA Device</a>
+</div>
+{% else %}
+<div class="mb-3">
+  <a href="{% url 'provider:setup_mfa' %}" class="btn btn-primary d-grid w-100">Setup MFA</a>
+</div>
+{% endif %}
+
+<div class="mb-3">
+  <a href="{% url 'logout' %}" id="logout" class="btn btn-secondary d-grid w-100" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+
+
+<div class="modal fade" id="logoutModal" tabindex="-1" data-bs-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form method="post" action="{% url 'logout' %}">
+	<div class="modal-body">
+	  {% csrf_token %}
+	  <p>Are you sure you want to logout?</p>
+	</div>
+	<div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm</button>
+	</div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+{% endif %}
+
+{% endblock %}

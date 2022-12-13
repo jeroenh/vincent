@@ -1,0 +1,95 @@
+{% extends "cvdp/bt_base_site.html" %}
+{% load i18n static %}
+{% block title %}VINCE-NT Login{% endblock %}
+{% load account socialaccount provider_tags %}
+{% load render_bundle from webpack_loader %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{% static 'cvdp/js/jquery.min.js' %}"></script>
+{% endblock %}
+
+{% block branding %}{% endblock %}
+
+{% block authwidth %}
+<div class="authentication-wrapper authentication-signup container-p-y">
+  {% endblock %}
+  
+{% block content %}
+  <div class="modal fade" id="largemodal" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+	<div class="modal-header pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+	<div class="modal-body" id="modalbody">
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 border-end p-5 text-center">
+      <div class="d-grid pt-2 align-items-center w-100 justify-content-center gap-4">
+
+	{% if user.is_authenticated %}
+	<div class="alert alert-info">
+	  <strong>
+	    You are authenticated as {{ user.username }}.
+	  </strong>
+	</div>
+	<a href="{% url 'cvdp:dashboard' %}" class="btn btn-primary btn-lg">My Dashboard</a>
+	<a href="{% url 'authapp:logout' %}" class="btn btn-outline-primary btn-lg">Login as a different user.</a>
+
+	{% else %}
+	
+	{% if login_url %}
+	<a href="{{ login_url }}" id="loginbtn" class="btn btn-primary btn-lg">
+	  Login
+	</a>
+      
+      {% else %}
+      
+      {% get_providers as socialaccount_providers %}
+      {% with p=socialaccount_providers|get_provider:provider %}
+      
+      <a href="{% provider_login_url p.id openid=brand.openid_url process=process %}" class="btn btn-primary btn-lg">
+	Login with {{p.name}} 
+      </a>
+      {% for provider in socialaccount_providers %}
+      {% if provider == p %}
+      {% else %}
+      <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"
+	 href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{provider.name}}</a>
+      {% endif %}
+      {% endfor %}
+      {% endwith %}
+      {% endif %}
+      {% if registration_link != "false" %}
+      <a href="{{ registration_link }}?redirect_uri={{request.build_absolute_uri}}" class="btn btn-outline-primary btn-lg">Sign Up</a>
+      {% endif %}
+      {% endif %}
+
+      </div>
+    </div>
+    <div class="col-lg-6 p-5 text-center">
+      <div class="d-flex justify-content-center align-items-center mb-3">
+	{% if LOGO %}
+	<img alt="VINCE-NT logo" src="{% static LOGO %}">
+        {% else %}
+	<img alt="VINCE-NT logo" src="{% static 'cvdp/css/images/CVDP-default.png' %}">
+	{% endif %}
+      </div>
+      <p class="text-center mt-4 lead">
+        The Vulnerability Information and Coordination Environment -- A Platform for CVD and PSIRT Management
+      </p>
+      <div class="d-grid w-100 align-items-center">
+      {% if report_link %}
+      <a href="{{ report_link }}" class="btn btn-lg btn-outline-primary">Submit a Vulnerability Report</a>
+      {% endif %}
+      </div>
+
+    </div>
+  </div>
+  
+</div>
+{% render_bundle 'login' %}
+{% endblock %}

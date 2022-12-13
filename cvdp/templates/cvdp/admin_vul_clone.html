@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<p>This form should really only be used to duplicate 1 vulnerability at a time.  You may do multiple, but this form only allows you to provide 1 CVE ID so by duplicating all at the same time, you would be giving them all the same IDs.</p>
+
+<form action="" method="post">
+
+
+
+  {% csrf_token %}
+
+    {% for field in form %}
+        {% if field.is_hidden %}
+            {{ field }}
+        {% else %}
+            <div class="form-row">
+                {{ field.label_tag }} {{ field }}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <p>The following items will be cloned:</p>
+    <ul>{{ items|unordered_list }}</ul>
+    
+    <input type="hidden" name="action" value="duplicate_vulnerability" />
+    <input type="submit" name="apply" value="Confirm Clone" />
+</form>
+{% endblock %}

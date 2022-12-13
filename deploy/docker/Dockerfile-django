@@ -1,0 +1,116 @@
+##############################################################################
+## node artifact build
+##############################################################################
+FROM node:24 as build-node
+
+#RUN addgroup -S vincent && \
+#    adduser -S vincent -G vincent && \
+#    pip install --upgrade pip && \
+RUN mkdir -p /home/vincent/app && \
+    mkdir -p /home/vincent/app/assets
+
+ENV APP_HOME=/home/vincent/app
+WORKDIR ${APP_HOME}
+
+ARG ASSET_PATH
+#ARG API_URL
+#ARG SSVC_ROLE
+#ARG RECAPTCHA_SITE_KEY
+#ARG TURNSTILE_SITE_KEY
+#ARG ADP_CONTAINER_TITLE
+ENV ASSET_PATH $ASSET_PATH
+#ENV API_URL $API_URL
+#ENV SSVC_ROLE $SSVC_ROLE
+#ENV RECAPTCHA_SITE_KEY $RECAPTCHA_SITE_KEY
+#ENV TURNSTILE_SITE_KEY $TURNSTILE_SITE_KEY
+#ENV ADP_CONTAINER_TITLE $ADP_CONTAINER_TITLE
+
+COPY package.json package-lock.json ${APP_HOME}/
+RUN npm install
+
+COPY webpack.config.js ${APP_HOME}/
+COPY ./assets ${APP_HOME}/assets
+RUN npm run build
+
+
+##############################################################################
+## django artifact build
+##############################################################################
+FROM python:3.12-alpine as build-django
+
+RUN pip install --upgrade --no-cache-dir pip && \
+    mkdir -p /home/vincent/app && \
+    mkdir -p /home/vincent/app/staticfiles
+
+ENV APP_HOME=/home/vincent/app
+WORKDIR ${APP_HOME}
+
+# set to space-delimited list of additional APKs for *build* step
+ARG ADDITIONAL_BUILD_APK=""
+# allow builder to override which requirements.txt we use to hook cloud
+# provider requirements, etc. via inheritance
+ARG REQUIREMENTS_FILE="requirements.txt"
+
+RUN apk update && \
+    apk add --update --virtual build-deps \
+        gcc \
+        git \
+        libffi-dev \
+        libxml2-dev \
+        libxslt-dev \
+        musl-dev \
+        openssl \
+        postgresql-client \
+        postgresql-dev \
+        python3-dev \
+        xmlsec-dev \
+        xmlsec ${ADDITIONAL_BUILD_APK}
+
+COPY ${REQUIREMENTS_FILE} requirements.txt deploy/docker/requirements-docker.txt ${APP_HOME}/
+RUN pip install --no-cache-dir -r ${REQUIREMENTS_FILE} && \
+    pip install --no-cache-dir -r requirements-docker.txt 
+
+# We clean up build-deps, but probably not necessary.
+RUN apk del build-deps && \
+    rm -rf /var/cache/apk/*
+
+
+##############################################################################
+## django final image
+##############################################################################
+FROM python:3.12-alpine
+
+RUN addgroup -S vincent && \
+    adduser -S vincent -G vincent && \
+    mkdir -p /home/vincent/app && \
+    mkdir -p /home/vincent/app/static && \
+    mkdir -p /home/vincent/app/assets && \
+    mkdir -p /home/vincent/app/staticfiles && \
+    mkdir -p /home/vincent/app/attachments && \
+    chown -R vincent:vincent /home/vincent/app
+
+ENV APP_HOME=/home/vincent/app
+WORKDIR ${APP_HOME}
+
+# set to space-delimited list of additional APKs for final container
+ARG ADDITIONAL_APP_APK=""
+
+RUN apk update && \
+    apk add --update xmlsec openssl postgresql-client curl git ${ADDITIONAL_APP_APK} && \
+    rm -rf /var/cache/apk/*
+
+COPY --from=build-django /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+COPY --from=build-django /usr/local/bin/ /usr/local/bin/
+COPY --from=build-node --chown=vincent:vincent ${APP_HOME}/webpack-stats.json ${APP_HOME}/
+COPY --from=build-node --chown=vincent:vincent ${APP_HOME}/node_modules/ ${APP_HOME}/node_modules/
+#COPY --from=build-node ${APP_HOME}/webpack-stats.json ${APP_HOME}
+COPY --chown=vincent:vincent . ${APP_HOME}/
+COPY --from=build-node --chown=vincent:vincent ${APP_HOME}/assets/webpack_bundles/ ${APP_HOME}/assets/webpack_bundles/
+COPY --chown=vincent:vincent deploy/docker/app-startup.sh ${APP_HOME}/
+
+#RUN chown -R vincent:vincent ${APP_HOME} && \
+RUN chmod 755 ${APP_HOME}/app-startup.sh
+
+USER vincent
+
+ENTRYPOINT ["./app-startup.sh"]

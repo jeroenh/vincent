@@ -1,0 +1,82 @@
+{% extends base_template %}
+{% load i18n crispy_forms_tags %}
+{% block title %}{% trans "VINCE-NT Report a Vulnerability" %}{% endblock %}
+{% load render_bundle from webpack_loader %}
+{% load static %}
+
+{% block js %}
+{{ block.super }}
+{% if use_custom_form %}
+{% else %}
+{% if recaptcha %}
+<script src="https://www.google.com/recaptcha/api.js"></script>
+{% elif turnstile %}
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+  ></script>
+{% endif %}
+{% endif %}
+<script src="{% static 'cvdp/js/login.js' %}" src="text/javascript"></script>
+{% endblock %}
+{% block content %}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  {% include 'cvdp/include/top_panel.html' with title="Report Vulnerability" breadcrumbs="Report" %}
+  
+  {% if use_custom_form %}
+  {% if user.is_anonymous %}
+  <div class="alert alert-danger">Hey! You are about to submit this report anonymously. You will not be able to track progress of this case and we will not be able to contact you for more information. We want you to help us coordinate this vulnerability.  Please <a href="{% url 'authapp:login' %}">create an account</a> before submitting this form.</div>
+  {% else %}
+  <div id="user_auth_email" class="hidden">{{ user.email }}</div>
+  <div id="user_auth_name" class="hidden">{{ user.get_full_name }}</div>
+  {% endif %}
+  <div id="report_id" class="hidden">{{ report_id }}</div>
+
+  <div id="app"></div>
+  {% render_bundle 'custom_form' %}
+
+  {% else %}
+
+  
+  {% if form %}
+  <div class="card">
+    <div class="card-header">
+      {% if user.is_anonymous %}
+      <div class="alert alert-danger">Hey! You are about to submit this report anonymously. You will not be able to track progress of this case and we will not be able to contact you for more information. We want you to help us coordinate this vulnerability.  Please <a href="{% url 'authapp:login' %}">create an account</a> before submitting this form.</div>
+      {% endif %}
+      <p class="lead">
+	{{ intro|linebreaksbr }}
+      </p>
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data" id="login-form">
+	{% csrf_token %}
+	{{ form | crispy }}
+	<input type="hidden" value="{{ report_id }}" name="report_id" />
+	{% if recaptcha %}
+	
+	<button type="submit" class="btn btn-primary g-recaptcha" id="recaptcha-submit"
+		data-sitekey="{{ form.captcha }}"
+		data-callback='onSubmit'
+		data-action='submit'>Submit</button>
+	{% else %}
+	<div class="cf-turnstile" data-sitekey="{{form.captcha}}"></div>
+	<button class="btn btn-primary d-grid w-100"
+		type="submit">Submit</button>
+	{% endif %}
+      </form>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-danger">Oops! The reporting form has not been setup yet. Contact the systems administrators to setup the reporting form.</div>
+
+  {% endif %}
+    
+  {% endif %}
+</div>
+
+
+{% endblock %}

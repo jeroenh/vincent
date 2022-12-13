@@ -1,0 +1,34 @@
+NOTICE / JOINT OWNERSHIP AND LICENSING 
+
+Copyright (c) 2022-2026 Emily Sarneso 
+Copyright (c) 2022-2026 Jonathan Woytek 
+Copyright (c) 2022-2026 Edward Stoner 
+Copyright (c) 2022-2026 Art Manion
+Copyright (c) 2022-2026 Daniel Allison
+Copyright (c) 2022-2026 Donovan Truitt
+Copyright (c) 2022-2026 Tharros Defense, Inc. 
+
+Outbound Open Source License
+This project is made available to the public under the GNU Affero General 
+Public License, version 3 only (“AGPL-3.0-only”). See LICENSE.
+
+Joint Ownership Among Listed Holders 
+As between the copyright holders listed above (“Holders”), all contributions 
+made by any Holder to this repository are jointly owned by all Holders. 
+ 
+Fork-and-Continue Rights Among Holders 
+Each Holder may take a copy of this codebase and continue development and 
+distribution separately, including creating and distributing derivative 
+works, subject to: 
+  (1) compliance with the AGPL for any distributed copies that include 
+      AGPL-covered material, and 
+  (2) any third-party rights and applicable law. 
+ 
+Third-Party Contributions 
+Copyright in third-party contributions remains with the contributor(s) 
+unless a separate written agreement (e.g. a Contributor License Agreement 
+or assignment) states otherwise. 
+ 
+Trademarks 
+“Tharros Defense, Inc.” and related marks are not licensed under 
+AGPL-3.0-only. See TRADEMARKS.md. 

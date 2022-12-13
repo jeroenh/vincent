@@ -1,0 +1,64 @@
+{% extends 'cvdp/bt_base_site.html' %}
+{% load static %}
+
+{% block title %} VINCE-NT Create Account {% endblock %}
+
+{% block extrahead %}
+{% if recaptcha %}
+<script src="https://www.google.com/recaptcha/api.js"></script>
+{% elif turnstile %}
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+  ></script>
+{% endif %}
+<script src="{% static 'cvdp/js/login.js' %}" src="text/javascript"></script>
+{% endblock %}
+
+
+{% block authwidth %}
+<div class="authentication-wrapper-wide authentication-basic container-p-y">
+  {% endblock %}
+  
+{% block branding %}
+  <div class="app-brand justify-content-center">
+    <a href="{% url 'login' %}" class="app-brand-link gap-2" title="VINCE-NT Login">
+      <span class="app-brand-logo demo">
+        <img src="{% static 'cvdp/css/images/vincent.svg' %}">
+      </span>
+    </a>
+  </div>
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+  <h4 class="text-center mt-4">Register for a VINCE-NT account</h4>
+  <p class="text-center mt-2 mb-2">If you already have an account, <a href="{% url 'login' %}">login</a> instead.</p>
+  <form method="POST" id="login-form" action="{% url 'provider:register' %}?redirect_uri={{request.GET.redirect_uri}}">
+    
+    {% csrf_token %}
+    {{ form | crispy }}
+
+    <input type="hidden" name="next" value="{{ redirect_uri }}" />
+    <div class="mt-2">
+
+      {% if recaptcha %}
+      <button class="g-recaptcha btn btn-primary d-grid w-100" id="recaptcha-submit"
+	      data-sitekey="{{ form.captcha }}"
+              data-callback='onSubmit'
+              data-action='submit'
+	      type="submit">Register</button>
+      {% else %}
+      <div class="cf-turnstile" data-sitekey="{{form.captcha}}"></div>
+      <button class="btn btn-primary d-grid w-100" 
+	      type="submit">Register</button>
+      {% endif %}
+      
+    </div>
+  </form>
+  
+</div>
+
+{% endblock %}

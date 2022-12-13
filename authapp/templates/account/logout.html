@@ -1,0 +1,23 @@
+{% extends "authapp/logout.html" %}
+{% load i18n %}
+{% block title %}VINCE-NT Logout{% endblock %}
+{% block content %}
+<div id="content-main" class="content text-center">
+  <h4 class="mb-2">{% trans "Sign Out" %}</h4>
+  
+  <p class="mb-4">{% trans 'Are you sure you want to sign out?' %}</p>
+
+  <form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <div class="btn-group d-flex align-items-center mb-3 gap-2" role="group">
+      <a class="btn btn-secondary" type="cancel" href="{% url 'cvdp:dashboard' %}">{% trans 'Cancel' %}</a>
+      <button class="btn btn-primary d-grid" type="submit">{% trans 'Sign Out' %}</button>
+    </div>
+  </form>
+</div>
+
+
+{% endblock %}

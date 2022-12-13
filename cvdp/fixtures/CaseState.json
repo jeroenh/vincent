@@ -1,0 +1,182 @@
+[
+{
+  "model": "cvdp.casestate",
+  "pk": 1,
+  "fields": {
+    "name": "New",
+    "description": "Initial case state before assignment occurs.",
+    "code": "new",
+    "parent": null,
+    "order": 1,
+    "color": "success"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 2,
+  "fields": {
+    "name": "Triage",
+    "description": "Validity analysis and determination. Triage occurs once the case is assigned to a coordination team. Validation of the case is determined in this step. If the case is deemed not valid it will be closed. If validation is confirmed, this case moves to the next state.",
+    "code": "triage",
+    "parent": null,
+    "order": 2,
+    "color": "primary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 3,
+  "fields": {
+    "name": "Outreach",
+    "description": "Initial contact with vendor. Vendor is contacted by assigned team or researcher and requested to review the case and comment in VINCE-NT. Outreach time requirement is dictated by criticality level and future SOP/policy.",
+    "code": "outreach",
+    "parent": null,
+    "order": 3,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 4,
+  "fields": {
+    "name": "Unresponsive Vendor",
+    "description": "Vendor does not respond to initial contact.\r\nAfter a pre-determined amount of time, a case will move to this section when a vendor does not respond. When a coordinator attempts additional contact, this case will automatically move back to the ‘Outreach’ bucket.After 45 days from initial outreach attempt this case is flagged as overdue and marked red. This may be adjusted once vendor response is received",
+    "code": "unresponsive_vendor",
+    "parent": null,
+    "order": null,
+    "color": "danger"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 5,
+  "fields": {
+    "name": "Case Discussion",
+    "description": "Vendor accesses VINCE-NT and interacts with the case.  \r\nThis case is marked yellow after 14 days of no interaction from vendor and/or researcher.\r\nThis case is marked red after 30 days of no interaction from vendor and/or researcher.\r\nThis case is moved to the unresponsive bucket if there is no vendor and/or researcher action after 45 days.",
+    "code": "case_discussion",
+    "parent": null,
+    "order": 4,
+    "color": "info"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 6,
+  "fields": {
+    "name": "Vendor Remediation",
+    "description": "Vendor has patch or mitigation plan in place or vendor is actively working to implement mitigation or patch. Once vendor has patch or mitigation plan in place this will move to advisory development. After a predetermined amount of time of no interaction, this will move to unresponsive vendor.",
+    "code": "vendor_remediation",
+    "parent": "case_discussion",
+    "order": 5,
+    "color": "info"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 7,
+  "fields": {
+    "name": "Advisory Development",
+    "description": "Development lifecycle of an advisory. This includes multiple substates.",
+    "code": "advisory_development",
+    "parent": null,
+    "order": 6,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 8,
+  "fields": {
+    "name": "Coordinator Development",
+    "description": "Coordination team creates initial publication. Coordinator solicits input from researcher and/or vendor for initial draft.",
+    "code": "coordinator_development",
+    "parent": "advisory_development",
+    "order": 1,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 9,
+  "fields": {
+    "name": "Vendor Review",
+    "description": "Vendor reviews draft of publication and provides their input/feedback.",
+    "code": "vendor_review",
+    "parent": "advisory_development",
+    "order": 2,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 10,
+  "fields": {
+    "name": "Researcher Review",
+    "description": "Researcher/Reporter reviews draft of publication and provides their input/feedback.",
+    "code": "researcher_review",
+    "parent": "advisory_development",
+    "order": 3,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 11,
+  "fields": {
+    "name": "Final Draft",
+    "description": "Advisory is edited based on feedback and approved by all parties.",
+    "code": "final_draft",
+    "parent": "advisory_development",
+    "order": 4,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 12,
+  "fields": {
+    "name": "Publications Review",
+    "description": "Final technical review of publication performed by lead coordination team. Awaiting established publication date.",
+    "code": "publications_review",
+    "parent": "advisory_development",
+    "order": 5,
+    "color": "secondary"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 13,
+  "fields": {
+    "name": "Published",
+    "description": "Advisory approved for publication, and published.",
+    "code": "published",
+    "parent": "advisory_development",
+    "order": 6,
+    "color": "success"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 14,
+  "fields": {
+    "name": "Closed",
+    "description": "Final case note added and case is closed. \r\nIf new information becomes available in the future, this case can be referenced in a new entry. Email notification of case closure are disseminated to all involved parties.",
+    "code": "closed",
+    "parent": null,
+    "order": 8,
+    "color": "dark"
+  }
+},
+{
+  "model": "cvdp.casestate",
+  "pk": 15,
+  "fields": {
+    "name": "CVEs Published",
+    "description": "Any applicable CVEs have been published to CVE Services.",
+    "code": "cves_published",
+    "parent": null,
+    "order": 7,
+    "color": "success"
+  }
+}
+]

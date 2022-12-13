@@ -1,0 +1,6 @@
+-r requirements.txt
+boto3==1.42.62
+django-ses==4.7.2
+django-storages==1.14.6
+python-dateutil==2.9.0.post0
+watchtower==3.4.0

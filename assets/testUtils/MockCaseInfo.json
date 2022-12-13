@@ -1,0 +1,1478 @@
+{
+    "user":
+    {
+	"name": "emily",
+	"org": "hello@skddd",
+	"photo": null,
+	"logocolor": "#7FF3AE",
+	"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+	"groups": [
+            "Vullabs",
+            "coordinator_mgr",
+            "analyst_mgr",
+            "user_admin"
+	],
+	"roles": [
+            "coordinator",
+            "analyst",
+            "user_admin",
+            "staff",
+            "admin"
+	],
+	"uuid": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+	"groupadmin": true,
+	"welcome": {
+            "suggestions": [],
+            "pending": [],
+            "new_posts": 0,
+            "new_cases": [],
+            "unseen_cases": []
+	}
+    },
+    "casepart": [
+    {
+        "id": 539,
+        "participant": {
+            "id": 481,
+            "name": "Vullabs",
+            "participant_type": "group",
+            "added_by": "emily some really long name",
+            "photo": null,
+            "logocolor": "#983e0c",
+            "role": "owner",
+            "uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+            "added": "2025-11-13T20:26:43.270323Z",
+            "notified": "2025-11-13T20:26:43.271229Z",
+            "roles_available": [
+                "supplier",
+                "reporter",
+                "observer",
+                "participant",
+                "owner"
+            ],
+            "users": [],
+            "viewed": [
+                {
+                    "user": "emily some really long name",
+                    "first_viewed": "2025-11-13T19:18:19.427391Z",
+                    "date_viewed": "2025-11-13T20:26:50.746399Z"
+                }
+            ],
+            "pulse": null
+        },
+        "thread": "269"
+    },
+	{
+        "id": 520,
+        "participant": {
+            "id": 462,
+            "name": "emily some really long name",
+            "participant_type": "user",
+            "added_by": "emily some really long name",
+            "photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+            "logocolor": "#7FF3AE",
+            "role": "owner",
+            "uuid": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+            "added": "2025-10-08T16:05:31.566504Z",
+            "notified": "2025-11-13T20:26:46.659970Z",
+            "roles_available": [
+                "owner",
+                "supplier",
+                "reporter",
+                "observer",
+                "participant"
+            ],
+            "users": [],
+            "viewed": [
+                {
+                    "user": "emily some really long name",
+                    "first_viewed": "2025-11-13T19:18:19.427391Z",
+                    "date_viewed": "2025-11-13T20:26:50.746399Z"
+                }
+            ],
+            "pulse": null
+        },
+        "thread": "269"
+    }
+    ],
+	
+    "post_search": [
+		{
+			"id": 464,
+			"created": "2026-02-06T20:18:35.661585Z",
+			"author": {
+				"name": "emily",
+				"org": "Vullabs",
+				"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+				"logocolor": "#7FF3AE",
+				"title": "",
+				"participant": 420,
+				"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+			},
+			"author_role": "owner",
+			"pinned": false,
+			"group": {
+				"name": "Vullabs",
+				"photo": null,
+				"logocolor": "#983e0c"
+			},
+			"content": "<p><a href=\"https://www.google.com\">Hello, world!</a><a href=\"www.google.com\"></a></p>",
+			"revisions": 1,
+			"revision_id": "553",
+			"replies": [],
+			"json": [
+				{
+					"type": "paragraph",
+					"children": [
+						{
+							"text": ""
+						},
+						{
+							"href": "https://www.google.com",
+							"type": "link",
+							"children": [
+								{
+									"text": "Hello, world!"
+								}
+							]
+						},
+						{
+							"text": ""
+						},
+						{
+							"href": "www.google.com",
+							"type": "link",
+							"children": [
+								{
+									"text": ""
+								}
+							]
+						},
+						{
+							"text": ""
+						}
+					]
+				}
+			],
+			"reactions": [],
+			"thread_id": 248,
+			"subject": "Official Case Thread",
+			"archived": false
+		}
+	],
+    
+    "caseparticipants": [
+		{
+			"id": 177,
+			"participant": {
+				"id": 126,
+				"name": "emily",
+				"participant_type": "user",
+				"added_by": "emily",
+				"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+				"logocolor": "#7FF3AE",
+				"role": "owner",
+				"uuid": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+				"added": "2023-09-21T15:39:24.430711Z",
+				"notified": "2023-09-21T15:39:24.432068Z",
+				"roles_available": [
+					"owner",
+					"supplier",
+					"reporter",
+					"observer",
+					"participant"
+				],
+				"users": []
+			},
+			"thread": "149"
+		},
+		{
+			"id": 178,
+			"participant": {
+				"id": 127,
+				"name": "Analygence",
+				"participant_type": "group",
+				"added_by": "emily",
+				"photo": "/media/group/4529b950-1f5f-4560-824c-41a674cd8307/farmhouse-bathroom-victor-smith-img_80410564_tNjOJco.jpeg",
+				"logocolor": "#4a7563",
+				"role": "supplier",
+				"uuid": "4529b950-1f5f-4560-824c-41a674cd8307",
+				"added": "2023-09-21T15:39:34.198125Z",
+				"notified": null,
+				"roles_available": [
+					"supplier",
+					"reporter",
+					"observer",
+					"participant"
+				],
+				"users": []
+			},
+			"thread": "149"
+		}
+	],
+    "owners": [
+	    {
+		"id": 478,
+		"name": "Vullabs",
+		"participant_type": "group",
+		"added_by": "emily",
+		"photo": null,
+		"logocolor": "#983e0c",
+		"role": "owner",
+		"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+		"added": "2025-11-13T16:44:11.772152Z",
+		"notified": "2025-11-13T16:44:11.773803Z",
+		"roles_available": [
+		    "supplier",
+		    "reporter",
+		    "observer",
+		    "participant",
+		    "owner"
+		],
+		"users": [],
+		"viewed": [
+		    {
+			"user": "emily",
+			"first_viewed": "2025-10-29T19:50:58.497139Z",
+			"date_viewed": "2025-11-13T16:44:13.669927Z"
+		    }
+		],
+		"pulse": "2025-11-13T17:07:51.187088Z"
+	    },
+	{
+	    "id": 125,
+	    "name": "emily",
+	    "participant_type": "user",
+	    "added_by": "emily",
+            "photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+	    "logocolor": "#7FF3AE",
+	    "role": "owner",
+	    "uuid": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+	    "added": "2023-09-06T18:49:59.844592Z",
+	    "notified": "2023-09-06T18:49:59.846409Z",
+	    "roles_available": [
+		"owner",
+		"supplier",
+		"reporter",
+		"observer",
+		"participant"
+	    ],
+	    "users": []
+	}
+    ],
+	"usercasestate":
+	{
+	    "user": {
+		"id": 1,
+		"name": "emily",
+		"org": "",
+		"photo": "http://localhost:8000/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+		"logocolor": "#7FF3AE",
+		"title": "",
+		"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+	    },
+	    "contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+	    "last_viewed": "2023-09-28T18:30:55.227760Z",
+	    "delete_perm": true,
+	    "role": "owner",
+	    "status_needed": false,
+	    "groups": [
+		{
+		    "name": "Vullabs",
+		    "type": "Group",
+		    "url": "/cvdp/groups/773d5eb0-fe79-4cb3-9573-929e10e25b12/",
+		    "photo": null,
+		    "logocolor": "#983e0c",
+		    "uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+		    "support_emails": [
+			"emily@vu.ls"
+		    ],
+		    "support_phone": "",
+		    "website": "",
+		    "mailing_address": "",
+		    "permissions": true
+		}
+	    ],
+	    "new_posts": []
+	},
+"case": {
+	"case_id": "310363",
+	"case_identifier": "CASE#310363",
+	"owners": [
+		{
+			"id": 1,
+			"name": "emily",
+		    "org": "",
+		    "participant_type": "user",
+			"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+			"logocolor": "#7FF3AE",
+			"title": "",
+			"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+		},
+	            {
+			"id": 481,
+			"name": "Vullabs",
+			"photo": null,
+			"logocolor": "#983e0c",
+			"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+			"participant_type": "group"
+		    }
+	],
+	"created_by": "Anonymous",
+	"created": "2023-08-29T14:31:09.418460Z",
+	"modified": "2023-09-21T15:59:46.195991Z",
+	"status": "Active",
+	"title": "Vulnerability Report form entry",
+	"summary": null,
+	"report": {
+		"received": "2023-08-29T14:31:09.412721Z",
+		"title": "Vulnerability Report",
+		"case_url": "",
+		"source": null,
+		"submitter": "emily",
+		"report": [
+			{
+				"priv": false,
+				"answer": [
+					"No"
+				],
+				"question": "Have you tried to contact the vendor?"
+			},
+			{
+				"priv": false,
+				"answer": "1.2.3",
+				"question": "What is the name of the affect product or software?"
+			},
+			{
+				"priv": false,
+				"answer": "sdjflsjdf",
+				"question": "What version number of the product or software is affected?"
+			},
+			{
+				"priv": true,
+				"answer": "slkdjflksjflkj",
+				"question": "What is the vulnerability. Please describe in detail."
+			},
+			{
+				"priv": false,
+				"answer": [
+					"test1"
+				],
+				"question": "Here is a select question."
+			},
+			{
+				"priv": false,
+				"answer": "skdljflsdjf",
+				"question": "How was the vulnerability discovered?"
+			},
+			{
+				"priv": false,
+				"answer": "emily_picture.jpg",
+				"question": "Add a file to prove your point"
+			}
+		],
+		"status": "Active",
+		"copy": false,
+		"transfer": false
+	},
+	"public_date": null,
+	"due_date": "2023-10-13T14:31:09.429309Z",
+	"advisory_status": "NOT STARTED",
+	"resolution": null
+},
+
+"caseresults": {
+	"count": 1,
+	"results": {
+		"case_id": "310363",
+		"case_identifier": "CASE#310363",
+		"owners": [
+			{
+				"id": 1,
+				"name": "emily",
+				"org": "",
+				"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+				"logocolor": "#7FF3AE",
+				"title": "",
+				"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+			}
+		],
+            "stats": {
+                "notes": 1,
+                "participants": 1,
+                "posts": 9,
+                "tickets": 2,
+                "vuls": 3
+            },
+	    "created_by": "Anonymous",
+		"created": "2023-08-29T14:31:09.418460Z",
+		"modified": "2023-09-21T15:59:46.195991Z",
+		"status": "Active",
+		"title": "Vulnerability Report form entry",
+		"summary": null,
+		"report": {
+			"received": "2023-08-29T14:31:09.412721Z",
+			"title": "Vulnerability Report",
+			"case_url": "",
+			"source": null,
+			"submitter": "emily",
+			"report": [
+				{
+					"priv": false,
+					"answer": [
+						"No"
+					],
+					"question": "Have you tried to contact the vendor?"
+				},
+				{
+					"priv": false,
+					"answer": "1.2.3",
+					"question": "What is the name of the affect product or software?"
+				},
+				{
+					"priv": false,
+					"answer": "sdjflsjdf",
+					"question": "What version number of the product or software is affected?"
+				},
+				{
+					"priv": true,
+					"answer": "slkdjflksjflkj",
+					"question": "What is the vulnerability. Please describe in detail."
+				},
+				{
+					"priv": false,
+					"answer": [
+						"test1"
+					],
+					"question": "Here is a select question."
+				},
+				{
+					"priv": false,
+					"answer": "skdljflsdjf",
+					"question": "How was the vulnerability discovered?"
+				},
+				{
+					"priv": false,
+					"answer": "emily_picture.jpg",
+					"question": "Add a file to prove your point"
+				}
+			],
+			"status": "Active",
+			"copy": false,
+			"transfer": false
+		},
+		"public_date": null,
+		"due_date": "2023-10-13T14:31:09.429309Z",
+		"advisory_status": "NOT STARTED",
+		"resolution": null
+	}
+},
+"users": {
+	"users": [
+		{
+			"id": 38,
+			"name": "Joe Smith",
+			"org": null,
+			"photo": null,
+			"logocolor": "#7C2497",
+			"title": null,
+			"contact": "02787a5b-0f2c-46c4-8586-7c02e8e7529b"
+		},
+		{
+			"id": 1,
+			"name": "emily",
+			"org": "",
+			"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+			"logocolor": "#7FF3AE",
+			"title": "",
+			"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+		}
+	],
+	"roles": [
+		"Cool People"
+	]
+},
+"threads": [
+	{
+		"id": 149,
+		"case": "310363",
+		"created": "2023-08-29T14:31:09.427862Z",
+		"subject": "Official Case Thread",
+		"official": true,
+		"archived": false
+	}
+],
+"postthreads": {
+	"id": 150,
+	"case": "310363",
+	"created": "2023-08-31T14:31:09.427862Z",
+	"subject": "New Thread",
+	"official": false,
+	"archived": false
+},
+"posts": {
+	"next": null,
+	"previous": null,
+	"count": 1,
+	"results": [
+		{
+			"id": 218,
+			"created": "2023-09-25T14:50:42.959438Z",
+			"author": {
+				"id": 1,
+				"name": "emily",
+				"org": "",
+				"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+				"logocolor": "#7FF3AE",
+				"title": "",
+				"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+			},
+			"author_role": "owner",
+			"pinned": false,
+			"group": {
+				"id": 10,
+				"name": "Vullabs",
+				"type": "Group",
+				"url": "/cvdp/groups/10/",
+				"photo": null,
+				"logocolor": "#9c2c97",
+				"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+				"support_email": null,
+				"support_phone": null,
+				"website": null,
+				"mailing_address": null
+			},
+			"content": "<p>Hello, world!</p>\n<p><br></p>",
+			"revisions": 0,
+			"revision_id": "256",
+			"replies": []
+		}
+	]
+},
+"editpost": {
+	"id": 218,
+	"created": "2023-09-25T14:50:42.959438Z",
+	"author": {
+		"id": 1,
+		"name": "emily",
+		"org": "",
+		"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+		"logocolor": "#7FF3AE",
+		"title": "",
+		"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+	},
+	"author_role": "owner",
+	"pinned": false,
+	"group": {
+		"id": 10,
+		"name": "Vullabs",
+		"type": "Group",
+		"url": "/cvdp/groups/10/",
+		"photo": null,
+		"logocolor": "#9c2c97",
+		"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+		"support_email": null,
+		"support_phone": null,
+		"website": null,
+		"mailing_address": null
+	},
+	"content": "<p>Boooyah!</p>\n<p><br></p>",
+	"revisions": 1,
+	"revision_id": "256",
+	"replies": []
+
+},
+"vuls":
+[
+    {
+        "id": 107,
+        "cve": "9999-21127",
+        "description": "Vul1",
+        "vul": "CVE-9999-21127",
+        "date_added": "2023-08-09T14:44:06.087675Z",
+        "date_public": null,
+        "problem_types": [
+            "CWE-74 Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection')"
+        ],
+        "references": [
+            "https://www.setandclick.gov"
+        ],
+        "tags": [],
+	"cvss": [
+	    {
+		"AV": null,
+		"AC": null,
+		"PR": null,
+		"UI": null,
+		"S": null,
+		"C": null,
+		"I": null,
+		"A": null,
+		"E": "X",
+		"RL": "X",
+		"RC": "X",
+		"scored_by": "emily",
+		"last_modified": "2024-08-28T20:14:55.413240Z",
+		"vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:H/UI:P/VC:H/VI:H/VA:H/SC:N/SI:H/SA:N",
+		"score": "6.8",
+		"severity": "medium",
+		"version": "4.0"
+	    }
+	],
+        "ssvc_vector": null,
+        "ssvc_decision": null,
+        "ssvc_decision_tree": null,
+        "affected_products": [
+            {
+                "vendor": "",
+                "product": "dsftklsjdf",
+		"default_status": "Unknown",
+		"status": [
+		    {
+			"status": "Affected",
+			"version_range": "<=",
+			"version_value": "0",
+			"version_end_range": "4.0.3",
+			"version_type": "semver",
+			"remediation_category": "",
+			"remediation_url": "",
+			"justification": "",
+			"remediation_detail": ""
+		    }
+		]
+            },
+	    {
+		"vendor": "Microsoft",
+		"product": "something",
+		"default_status": "Unknown",
+		"status": [
+		    {
+			"status": "Affected",
+			"version_type": "",
+			"version_range": "",
+			"version_value": "1.2.3",
+			"version_end_range": "",
+			"remediation_category": "",
+                        "remediation_url": "",
+                        "justification": "",
+                        "remediation_detail": ""
+		    }
+		]
+	    }
+	],
+        "case": "CASE#312650",
+	"publish": true,
+        "url": "/cvdp/cases/312650"
+    },
+    {
+        "id": 109,
+        "cve": "9999-21128",
+        "description": "this is a new one!",
+        "vul": "CVE-9999-21128",
+        "date_added": "2023-08-09T15:19:28.304762Z",
+        "date_public": null,
+        "problem_types": null,
+        "references": null,
+        "tags": [],
+	"cvss": [
+    {
+        "AV": null,
+        "AC": null,
+        "PR": null,
+        "UI": null,
+        "S": null,
+        "C": null,
+        "I": null,
+        "A": null,
+        "E": "X",
+        "RL": "X",
+        "RC": "X",
+        "last_modified": "2024-10-01T22:34:18.288638Z",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N",
+        "score": "5.3",
+        "severity": "MEDIUM",
+        "version": "4.0"
+    },
+    {
+        "AV": null,
+        "AC": null,
+        "PR": null,
+        "UI": null,
+        "S": null,
+        "C": null,
+        "I": null,
+        "A": null,
+        "E": "X",
+        "RL": "X",
+        "RC": "X",
+        "last_modified": "2024-10-01T22:34:18.298430Z",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "score": "3.5",
+        "severity": "LOW",
+        "version": "3.1"
+    },
+    {
+        "AV": null,
+        "AC": null,
+        "PR": null,
+        "UI": null,
+        "S": null,
+        "C": null,
+        "I": null,
+        "A": null,
+        "E": "X",
+        "RL": "X",
+        "RC": "X",
+        "last_modified": "2024-10-01T22:34:18.300358Z",
+        "vector": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "score": "3.5",
+        "severity": "LOW",
+        "version": "3.0"
+    },
+    {
+        "AV": null,
+        "AC": null,
+        "PR": null,
+        "UI": null,
+        "S": null,
+        "C": null,
+        "I": null,
+        "A": null,
+        "E": "X",
+        "RL": "X",
+        "RC": "X",
+        "last_modified": "2024-10-01T22:34:18.301799Z",
+        "vector": "AV:N/AC:L/Au:S/C:N/I:P/A:N",
+        "score": "4.0",
+        "severity": null,
+        "version": "2.0"
+    }
+	],
+        "ssvc_vector": null,
+        "ssvc_decision": null,
+        "ssvc_decision_tree": null,
+        "affected_products": [],
+        "case": "CASE#312650",
+	"publish": true,
+        "url": "/cvdp/cases/312650"
+    }
+],
+"cveaccounts": [
+{
+	"id": 1,
+    "org_name": "orgname",
+    "email": "email@email.com",
+    "active": true,
+    "server": "something",
+    "server_type": "something",
+    "api_key":  "klsjdflkjsdfklj0294034"
+}
+],
+"addposts": {
+	"next": null,
+	"previous": null,
+	"count": 2,
+	"results": [
+		{
+			"id": 218,
+			"created": "2023-09-25T14:50:42.959438Z",
+			"author": {
+				"id": 1,
+				"name": "emily",
+				"org": "",
+				"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+				"logocolor": "#7FF3AE",
+				"title": "",
+				"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+			},
+			"author_role": "owner",
+			"pinned": false,
+			"group": {
+				"id": 10,
+				"name": "Vullabs",
+				"type": "Group",
+				"url": "/cvdp/groups/10/",
+				"photo": null,
+				"logocolor": "#9c2c97",
+				"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+				"support_email": null,
+				"support_phone": null,
+				"website": null,
+				"mailing_address": null
+			},
+			"content": "<p>Hello, world!</p>\n<p><br></p>",
+			"revisions": 0,
+			"revision_id": "256",
+			"replies": []
+		},
+		{
+			"id": 219,
+			"created": "2023-09-26T14:50:42.959438Z",
+			"author": {
+				"id": 1,
+				"name": "emily",
+				"org": "",
+				"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+				"logocolor": "#7FF3AE",
+				"title": "",
+				"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+			},
+			"author_role": "owner",
+			"pinned": false,
+			"group": {
+				"id": 10,
+				"name": "Vullabs",
+				"type": "Group",
+				"url": "/cvdp/groups/10/",
+				"photo": null,
+				"logocolor": "#9c2c97",
+				"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+				"support_email": null,
+				"support_phone": null,
+				"website": null,
+				"mailing_address": null
+			},
+			"content": "<p>Boooooo!/p>\n<p><br></p>",
+			"revisions": 0,
+			"revision_id": "266",
+			"replies": []
+		}
+	]
+},
+"ssvc": [
+    {
+        "label": "Exploitation",
+        "value": "none"
+    },
+    {
+        "label": "Automatable",
+        "value": "yes"
+    },
+    {
+        "label": "Technical Impact",
+        "value": "partial"
+    },
+    {
+        "label": "Public Well-being Impact",
+        "value": "Material"
+    },
+    {
+        "label": "Mission Prevalence",
+        "value": "Support"
+    },
+    {
+        "label": "Mission & Well-being",
+        "value": "medium"
+    },
+    {
+        "label": "Decision",
+        "value": "Track"
+    },
+    {
+        "label": "date_scored",
+        "value": "2023-10-03T13:11:25.895677Z"
+    }
+],
+"getCVE": {
+    "dataType": "CVE_RECORD",
+    "dataVersion": "5.0",
+    "cveMetadata": {
+        "state": "PUBLISHED",
+        "cveId": "CVE-9999-21128",
+        "assignerOrgId": "baff130e-b8d5-4e15-b3d3-c3cf5d5545c6",
+        "assignerShortName": "fakethis",
+        "dateUpdated": "2023-06-15T00:00:00",
+        "dateReserved": "2022-11-03T00:00:00",
+        "datePublished": "2023-06-15T00:00:00"
+    },
+    "containers": {
+        "cna": {
+            "providerMetadata": {
+                "orgId": "ABCKDJFDKD12345332",
+                "shortName": "fakethis",
+                "dateUpdated": "2023-06-15T00:00:00"
+            },
+            "descriptions": [
+                {
+                    "lang": "en",
+                    "value": "In various functions of AppStandbyController.java, there is a possible way to break manageability scenarios due to a logic error in the code. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-11 Android-12 Android-12L Android-13Android ID: A-272042183"
+                }
+            ],
+            "affected": [
+                {
+                    "vendor": "n/a",
+                    "product": "Android",
+                    "versions": [
+                        {
+                            "version": "Android-11 Android-12 Android-12L Android-13",
+                            "status": "affected"
+                        }
+                    ]
+                }
+            ],
+            "references": [
+                {
+                    "url": "https://blahblahblah.com"
+                }
+            ],
+            "problemTypes": [
+                {
+                    "descriptions": [
+                        {
+                            "type": "text",
+                            "lang": "en",
+                            "description": "Elevation of privilege"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+},
+    "compstatus": {
+	"count": 3,
+	"next": null,
+	"previous": null,
+        "results": [
+	
+	    {
+		"summary": [
+		    {
+			"status": "Affected",
+			"count": 1
+		    }
+		],
+		"component": {
+		    "id": 2314,
+		    "name": "dsftklsjdf",
+		    "owner": "",
+		    "version": "1.3.2"
+		},
+		"vuls": [
+		    {
+			"id": 80,
+			"default_status": "Unknown",
+			"status": [
+			    {
+				"status": "Affected",
+				"version_type": "",
+				"version_range": "",
+				"version_value": "1.3.2",
+				"version_end_range": "",
+				"remediation_category": "",
+				"remediation_url": "",
+				"justification": "",
+				"remediation_detail": ""
+			    }
+			],
+			"vul": {
+			    "id": 107,
+			    "cve": "1111-21127",
+			    "vul": "CVE-1111-21127"
+			},
+			"statement": "WE IS AFFECTED",
+			"user": "emily",
+			"revisions": 0,
+			"revision_number": "0",
+			"created": "2023-09-06T14:30:05.396584Z",
+			"modified": "2023-09-06T14:30:05.396573Z",
+			"share": false
+		    }
+		]
+	    },
+	    {
+		"summary": [
+		    {
+			"status": "Fixed",
+			"count": 1
+		    }
+		],
+		"component": {
+		    "id": 9,
+		    "name": "libx",
+		    "owner": "",
+		    "version": "2.0.6"
+		},
+		"vuls": [
+		    {
+			"id": 71,
+			"default_status": "Unknown",
+			"status": [
+			    {
+				"version_value": "2.0.6",
+				"version_end_range": "",
+				"version_range": "",
+				"status": "Fixed",
+				"version_type": "",
+				"remediation_category": "",
+				"remediation_url": "",
+				"justification": "",
+				"remediation_detail": ""
+			    }
+			],
+			"user": "emily",
+			"statement": "sdfsdf",
+			"vul": {
+			    "id": 109,
+			    "cve": "2023-21128",
+			    "vul": "CVE-2023-21128"
+			},
+			"revisions": 2,
+			"revision_number": "2",
+			"created": "2023-09-01T15:44:10.657032Z",
+			"modified": "2023-09-01T15:44:10.656976Z",
+			"share": false
+		    }
+		]
+	    },
+	    {
+		"summary": [
+		    {
+			"status": "Affected",
+			"count": 1
+		    }
+		],
+		"component": {
+		    "id": 2315,
+		    "name": "something",
+		    "owner": "",
+		    "version": null
+		},
+		"vuls": [
+		    {
+			"id": 81,
+			"status": [
+			    {
+				"status": "Affected",
+				"version_value": "1.2.3",
+				"version_end_range": "",
+				"version_range": null,
+				"version_type": "",
+				"justification": "",
+				"remediation_category": "",
+				"remediation_url": "",
+				"remediation_detail": ""
+			    }
+			],
+			"user": "bing",
+			"statement": "",
+			"vul": {
+			    "id": 107,
+			    "cve": "2023-21127",
+			    "vul": "CVE-2023-21127"
+			},
+			"revisions": 0,
+			"revision_number": "0",
+			"created": "2023-09-07T16:06:21.822472Z",
+			"modified": "2023-09-07T16:06:21.822450Z",
+			"share": false
+		    }
+		]
+	    }
+	]
+    },
+    "groups": {
+	"count": 3,
+	"pages": 1,
+	"page_size": 20,
+	"results": [
+	    {
+		"id": 24,
+		"name": "Crazy Horse",
+		"type": "Group",
+		"url": "/cvdp/groups/9e30cddf-7096-4472-9ad5-9141a84a1444/",
+		"photo": null,
+		"logocolor": "#842DE9",
+		"uuid": "9e30cddf-7096-4472-9ad5-9141a84a1444",
+		"support_email": null,
+		"support_phone": null,
+		"website": null,
+		"mailing_address": null
+	    },
+	    {
+		"id": 30,
+		"name": "Bright Lights",
+		"type": "Group",
+		"url": "/cvdp/groups/efc742f7-d937-470c-b115-ea67245c1a6e/",
+		"photo": null,
+		"logocolor": "#7CC212",
+		"uuid": "efc742f7-d937-470c-b115-ea67245c1a6e",
+		"support_email": null,
+		"support_phone": null,
+		"website": null,
+		"mailing_address": null
+	    },
+	    {
+		"email": "test@gmail.com",
+		"phone": null,
+		"name": "",
+		"type": "Contact/User",
+		"user_name": "test",
+		"url": "/cvdp/contact/7d081ad7-12f2-41bb-9b57-895138204665/",
+		"uuid": "7d081ad7-12f2-41bb-9b57-895138204665"
+	    }
+	]
+    },
+    "unassigned_case": {
+	"case_id": "310363",
+	"case_identifier": "CASE#310363",
+	"owners": [],
+	"created_by": "Anonymous",
+	"created": "2023-08-29T14:31:09.418460Z",
+	"modified": "2023-09-21T15:59:46.195991Z",
+	"status": "Pending",
+	"title": "Vulnerability Report form entry",
+	"summary": null,
+	"report": {
+		"received": "2023-08-29T14:31:09.412721Z",
+		"title": "Vulnerability Report",
+		"case_url": "",
+		"source": null,
+		"submitter": "emily",
+		"report": [
+			{
+				"priv": false,
+				"answer": [
+					"No"
+				],
+				"question": "Have you tried to contact the vendor?"
+			},
+			{
+				"priv": false,
+				"answer": "1.2.3",
+				"question": "What is the name of the affect product or software?"
+			},
+			{
+				"priv": false,
+				"answer": "sdjflsjdf",
+				"question": "What version number of the product or software is affected?"
+			},
+			{
+				"priv": true,
+				"answer": "slkdjflksjflkj",
+				"question": "What is the vulnerability. Please describe in detail."
+			},
+			{
+				"priv": false,
+				"answer": [
+					"test1"
+				],
+				"question": "Here is a select question."
+			},
+			{
+				"priv": false,
+				"answer": "skdljflsdjf",
+				"question": "How was the vulnerability discovered?"
+			},
+			{
+				"priv": false,
+				"answer": "emily_picture.jpg",
+				"question": "Add a file to prove your point"
+			}
+		],
+		"status": "Active",
+		"copy": false,
+		"transfer": false
+	},
+	"public_date": null,
+	"due_date": "2023-10-13T14:31:09.429309Z",
+	"advisory_status": "NOT STARTED",
+	"resolution": null
+    },
+    "group": {
+	"active": true,
+	"group": {
+	    "id": 24,
+	    "name": "Crazy Horse",
+	    "type": "Group",
+	    "url": "/cvdp/groups/24/",
+	    "photo": null,
+	    "logocolor": "#842DE9",
+	    "uuid": "9e30cddf-7096-4472-9ad5-9141a84a1444",
+	    "support_email": null,
+	    "support_phone": null,
+	    "website": null,
+	    "mailing_address": null
+	}
+    },
+    "user":{
+	"name": "emily",
+	"org": "",
+	"photo": "http://localhost:8000/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+	"logocolor": "#7FF3AE",
+	"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+	"groups": [
+            {
+		"name": "Vullabs",
+		"type": "Group",
+		"url": "/cvdp/groups/773d5eb0-fe79-4cb3-9573-929e10e25b12/",
+		"photo": null,
+		"logocolor": "#9c2c97",
+		"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+		"support_email": "support@vu.ls",
+		"support_phone": "",
+		"website": "",
+		"mailing_address": ""
+            }
+	],
+	"roles": [
+            "coordinator",
+            "staff",
+            "admin"
+	]
+    },
+    "case_states": [
+	{
+	    "name": "New",
+	    "description": "Initial case state before assignment occurs.",
+	    "children": [],
+	    "color": "success"
+	},
+	{
+	    "name": "Triage",
+	    "description": "Validity analysis and determination. Triage occurs once the case is assigned to a coordination team. Validation of the case is determined in this step. If the case is deemed not valid it will be closed. If validation is confirmed, this case moves to the next state.",
+	    "children": [],
+	    "color": "primary"
+	},
+	{
+	    "name": "Outreach",
+	    "description": "Initial contact with vendor. Vendor is contacted by assigned team or researcher and requested to review the case and comment in VINCE-NT. Outreach time requirement is dictated by criticality level and future SOP/policy.",
+	    "children": [],
+	    "color": "secondary"
+	},
+	{
+	    "name": "Case Discussion",
+	    "description": "Vendor accesses VINCE-NT and interacts with the case.  \r\nThis case is marked yellow after 14 days of no interaction from vendor and/or researcher.\r\nThis case is marked red after 30 days of no interaction from vendor and/or researcher.\r\nThis case is moved to the unresponsive bucket if there is no vendor and/or researcher action after 45 days.",
+	    "children": [
+		{
+		    "name": "Vendor Remediation",
+		    "description": "Vendor has patch or mitigation plan in place or vendor is actively working to implement mitigation or patch. Once vendor has patch or mitigation plan in place this will move to advisory development. After a predetermined amount of time of no interaction, this will move to unresponsive vendor.",
+		    "children": [],
+		    "color": "info"
+		}
+	    ],
+	    "color": "info"
+	},
+	{
+	    "name": "Advisory Development",
+	    "description": "Development lifecycle of an advisory. This includes multiple substates.",
+	    "children": [
+		{
+		    "name": "Coordinator Development",
+		    "description": "Coordination team creates initial publication. Coordinator solicits input from researcher and/or vendor for initial draft.",
+		    "children": [],
+		    "color": "secondary"
+		},
+		{
+		    "name": "Vendor Review",
+		    "description": "Vendor reviews draft of publication and provides their input/feedback.",
+		    "children": [],
+		    "color": "secondary"
+		},
+		{
+		    "name": "Researcher Review",
+		    "description": "Researcher/Reporter reviews draft of publication and provides their input/feedback.",
+		    "children": [],
+		    "color": "secondary"
+		},
+		{
+		    "name": "Final Draft",
+		    "description": "Advisory is edited based on feedback and approved by all parties.",
+		    "children": [],
+		    "color": "secondary"
+		},
+		{
+		    "name": "Publications Review",
+		    "description": "Final technical review of publication performed by lead coordination team. Awaiting established publication date.",
+		    "children": [],
+		    "color": "secondary"
+		},
+		{
+		    "name": "Published",
+		    "description": "Advisory approved for publication, and published.",
+		    "children": [],
+		    "color": "success"
+		}
+	    ],
+	    "color": "secondary"
+	},
+	{
+	    "name": "CVEs Published",
+	    "description": "Any applicable CVEs have been published to CVE Services.",
+	    "children": [],
+	    "color": "success"
+	},
+	{
+	    "name": "Closed",
+	    "description": "Final case note added and case is closed. \r\nIf new information becomes available in the future, this case can be referenced in a new entry. Email notification of case closure are disseminated to all involved parties.",
+	    "children": [],
+	    "color": "dark"
+	},
+	{
+	    "name": "Unresponsive Vendor",
+	    "description": "Vendor does not respond to initial contact.\r\nAfter a pre-determined amount of time, a case will move to this section when a vendor does not respond. When a coordinator attempts additional contact, this case will automatically move back to the ‘Outreach’ bucket.After 45 days from initial outreach attempt this case is flagged as overdue and marked red. This may be adjusted once vendor response is received",
+	    "children": [],
+	    "color": "danger"
+	}
+    ],
+    "metadata": {
+	"users": [
+            {
+		"id": 1,
+		"name": "emily",
+		"org": "Company@this",
+		"photo": "/media/user_logos/54b2bf17-10a1-45aa-91c4-d37bab92f661/vu.ls.png",
+		"logocolor": "#7FF3AE",
+		"title": "",
+		"contact": "54b2bf17-10a1-45aa-91c4-d37bab92f661",
+		"uuid": "54b2bf17-10a1-45aa-91c4-d37bab92f661"
+            }
+	],
+	"status": [
+            {
+		"id": "0",
+		"name": "Pending"
+            },
+            {
+		"id": "1",
+		"name": "Active"
+            },
+            {
+		"id": "2",
+		"name": "Inactive"
+            }
+	],
+	"teams": [
+            {
+		"name": "Vullabs",
+		"type": "Group",
+		"url": "/cvdp/groups/773d5eb0-fe79-4cb3-9573-929e10e25b12/",
+		"photo": null,
+		"logocolor": "#983e0c",
+		"uuid": "773d5eb0-fe79-4cb3-9573-929e10e25b12",
+		"support_emails": [
+                    "emily@vu.ls"
+		],
+		"support_phone": "",
+		"website": "",
+		"mailing_address": "",
+		"permissions": true
+            }
+	],
+	"roles": [
+            "Something"
+	],
+	"states": [
+            {
+		"name": "New",
+		"description": "Initial case state before assignment occurs.",
+		"children": [],
+		"color": "success"
+            },
+            {
+		"name": "Triage",
+		"description": "Validity analysis and determination. Triage occurs once the case is assigned to a coordination team. Validation of the case is determined in this step. If the case is deemed not valid it will be closed. If validation is confirmed, this case moves to the next state.",
+		"children": [],
+		"color": "primary"
+            },
+            {
+		"name": "Outreach",
+		"description": "Initial contact with vendor. Vendor is contacted by assigned team or researcher and requested to review the case and comment in VINCE-NT. Outreach time requirement is dictated by criticality level and future SOP/policy.",
+		"children": [],
+		"color": "secondary"
+            },
+            {
+		"name": "Case Discussion",
+		"description": "Vendor accesses VINCE-NT and interacts with the case.  \r\nThis case is marked yellow after 14 days of no interaction from vendor and/or researcher.\r\nThis case is marked red after 30 days of no interaction from vendor and/or researcher.\r\nThis case is moved to the unresponsive bucket if there is no vendor and/or researcher action after 45 days.",
+		"children": [
+                    {
+			"name": "Vendor Remediation",
+			"description": "Vendor has patch or mitigation plan in place or vendor is actively working to implement mitigation or patch. Once vendor has patch or mitigation plan in place this will move to advisory development. After a predetermined amount of time of no interaction, this will move to unresponsive vendor.",
+			"children": [],
+			"color": "info"
+                    }
+		],
+		"color": "info"
+            },
+            {
+		"name": "Advisory Development",
+		"description": "Development lifecycle of an advisory. This includes multiple substates.",
+		"children": [
+                    {
+			"name": "Coordinator Development",
+			"description": "Coordination team creates initial publication. Coordinator solicits input from researcher and/or vendor for initial draft.",
+			"children": [],
+			"color": "secondary"
+                    },
+                    {
+			"name": "Vendor Review",
+			"description": "Vendor reviews draft of publication and provides their input/feedback.",
+			"children": [],
+			"color": "secondary"
+                    },
+                    {
+			"name": "Researcher Review",
+			"description": "Researcher/Reporter reviews draft of publication and provides their input/feedback.",
+			"children": [],
+			"color": "secondary"
+                    },
+                    {
+			"name": "Final Draft",
+			"description": "Advisory is edited based on feedback and approved by all parties.",
+			"children": [],
+			"color": "secondary"
+                    },
+                    {
+			"name": "Publications Review",
+			"description": "Final technical review of publication performed by lead coordination team. Awaiting established publication date.",
+			"children": [],
+			"color": "secondary"
+                    },
+                    {
+			"name": "Published",
+			"description": "Advisory approved for publication, and published.",
+			"children": [],
+			"color": "success"
+                    }
+		],
+		"color": "secondary"
+            },
+            {
+		"name": "CVEs Published",
+		"description": "Any applicable CVEs have been published to CVE Services.",
+		"children": [],
+		"color": "success"
+            },
+            {
+		"name": "Closed",
+		"description": "Final case note added and case is closed. \r\nIf new information becomes available in the future, this case can be referenced in a new entry. Email notification of case closure are disseminated to all involved parties.",
+		"children": [],
+		"color": "dark"
+            },
+            {
+		"name": "Unresponsive Vendor",
+		"description": "Vendor does not respond to initial contact.\r\nAfter a pre-determined amount of time, a case will move to this section when a vendor does not respond. When a coordinator attempts additional contact, this case will automatically move back to the ‘Outreach’ bucket.After 45 days from initial outreach attempt this case is flagged as overdue and marked red. This may be adjusted once vendor response is received",
+		"children": [],
+		"color": "danger"
+            }
+	],
+	"resolutions": [
+            {
+		"description": "Fixed",
+		"id": 1,
+		"email": null
+            },
+            {
+		"description": "Published",
+		"id": 2,
+		"email": null
+            }
+	],
+	"approvals": [],
+	"custom_report": false,
+	"unread": 0,
+	"unapproved": 0,
+	"milestones": []
+    }
+	
+}

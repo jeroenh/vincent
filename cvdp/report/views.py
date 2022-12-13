@@ -1,0 +1,649 @@
+from django.shortcuts import render
+import logging
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.urls import reverse, reverse_lazy
+from django.views import generic, View
+from django.utils.timesince import timesince
+from django.views.generic.edit import FormView, UpdateView, FormMixin, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.forms.models import inlineformset_factory, formset_factory
+from django.forms.utils import ErrorList
+from authapp.views import PendingTestMixin
+from django.http import HttpResponse, Http404, JsonResponse, HttpResponseNotAllowed, HttpResponseServerError, HttpResponseForbidden, HttpResponseRedirect, HttpResponseBadRequest
+from authapp.models import User
+from django.utils.safestring import mark_safe
+import traceback
+from cvdp.manage.forms import *
+from rest_framework import exceptions, generics, status, authentication, viewsets, mixins, filters
+from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from cvdp.permissions import CoordinatorPermission, PendingUserPermission, is_case_owner, TransferAccessPermission, get_coord_teams, get_lead_coord_team, CaseOwnerWritePermission
+from cvdp.manage.serializers import *
+from cvdp.cases.serializers import ReportSerializer, CoordReportSerializer, ReportDetailSerializer
+from cvdp.manage.models import ReportingForm
+from cvdp.models import CaseReport, CaseReportOriginal
+from cvdp.lib import *
+import json
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+
+"""
+Reports Page - React App - 'myreports'
+"""
+class ReportsView(LoginRequiredMixin, PendingTestMixin, generic.ListView):
+    template_name = 'cvdp/myreports.html'
+    login_url = "authapp:login"
+    model = CaseReport
+
+    def get_context_data(self, **kwargs):
+        context = super(ReportsView, self).get_context_data(**kwargs)
+        context['myreportspage'] = 1
+        return context
+
+    
+class ReportsAPIView(viewsets.ModelViewSet):
+    serializer_class = ReportDetailSerializer
+    permission_classes = (IsAuthenticated, PendingUserPermission)
+
+    def list(self, request, *args, **kwargs):
+        content = self.get_queryset()
+        return Response(self.serializer_class(content, many=True,
+                                           context={'user': request.user}).data)
+
+    def get_queryset(self):
+        return CaseReport.objects.filter(entry__created_by=self.request.user, copy=False).order_by('-entry__created')
+
+
+class ReportTransferAPIView(viewsets.ModelViewSet):
+    serializer_class = ReportSerializer
+    permission_classes = (IsAuthenticated, PendingUserPermission, TransferAccessPermission)
+    
+    def create(self, request, *args, **kwargs):
+        logger.debug(f"{self.__class__.__name__} post: {self.request.data}")
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            #get connection
+            connection = AdVISEConnection.objects.filter(incoming_key=self.request.user.auth_token).first()
+            report = request.data['report']
+            if type(report) is str:
+                try:
+                    report = json.loads(report)
+                except (ValueError, TypeError) as e:
+                    return Response({'detail': 'report is invalid. Expected JSON array.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if not(type(report) is list):
+                return Response({'detail': 'report is invalid. Should be an array of question and answer objects.'}, status=status.HTTP_400_BAD_REQUEST)
+            for x in report:
+                if not(x.get('question') and x.get('answer')):
+                    return Response({'detail': 'invalid format for report. Should be an array of question and answer objects.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if not(request.data.get('transfer_reason')):
+                return Response({'detail': 'Invalid report. Required field, transfer_reason, is missing.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            cr = CaseReport(report=report,
+                            connection=connection,
+                            source=request.data['source'])
+            cr.save()
+            
+            new_case_id = generate_case_id()
+            #now create the case
+            case = Case(report = cr,
+                        case_id = new_case_id,
+                        summary=f"Case Transfer Reason: {request.data['transfer_reason']}",
+                        title=f"Transfer request") #from {connection.group.name}")
+            
+            case.save()
+
+            new_state = CaseState.objects.filter(code = "new").first()
+            create_case_action(f"case transferred with reason {request.data['transfer_reason']}", self.request.user, case, state=new_state)
+            return Response({'case_id': new_case_id, 'status': 'Pending'}, status=status.HTTP_202_ACCEPTED)
+        else:
+            logger.debug(serializer.errors)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+
+class OrigReportAPIView(viewsets.ModelViewSet):
+    serializer_class = CoordReportSerializer
+    permission_classes = (IsAuthenticated, CoordinatorPermission)
+
+    def get_view_name(self):
+        return f"Original Case Report"
+
+    def get_object(self):
+        orig = get_object_or_404(CaseReportOriginal, case__case_id=self.kwargs['caseid'])
+        return orig.report
+
+
+class AddReportView(LoginRequiredMixin, UserPassesTestMixin, generic.TemplateView):
+    template_name = 'cvdp/add_report.html'
+    login_url = "authapp:login"
+
+    def test_func(self):
+        return is_coordinator(self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super(AddReportView, self).get_context_data(**kwargs)
+
+        form = ReportingForm.objects.all().first()
+        if (form):
+            context['form'] = form.get_form()
+            context['intro'] = form.intro
+
+        case = get_object_or_404(Case, case_id=self.kwargs.get('caseid'))
+        if case.report:
+            context['error'] = "This case already has a report"
+        if not is_case_owner(self.request.user, case.id):
+            context['error'] = "You must be the case owner to add a report."
+
+        return context
+
+class AddCaseReportView(LoginRequiredMixin, UserPassesTestMixin, generic.TemplateView):
+    http_method_names = ['post']
+    template_name='cvdp/notemplate.html'
+    login_url = "authapp:login"
+
+    def test_func(self):
+        case = get_object_or_404(Case, case_id=self.kwargs.get('caseid'))
+        return is_case_owner(self.request.user, case.id)
+
+    def post(self, request, *args, **kwargs):
+        logger.debug(f"{self.__class__.__name__} post: {self.request.POST}")
+
+        case = get_object_or_404(Case, case_id=self.kwargs['caseid'])
+        if case.report:
+            return JsonResponse({'message': 'This case already has a report.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        rform = ReportingForm.objects.all().first()
+
+        form = rform.get_form(self.request.POST)
+        if form.is_valid():
+            #create form entry
+            fe = FormEntry(form=rform)
+            if self.request.user.is_authenticated:
+                fe.created_by=self.request.user
+            fe.save()
+
+            logger.debug(form.cleaned_data)
+
+            #make the answers
+            pp = rform.get_pretty_answers(form.cleaned_data)
+
+            logger.debug(pp)
+
+            #create case report
+            cr = CaseReport(entry=fe,
+                            report=pp)
+            cr.save()
+
+            case.report = cr
+            case.save()
+
+            serializer = ReportSerializer(cr)
+
+            return JsonResponse({'message': 'success', 'data': serializer.data}, status=status.HTTP_202_ACCEPTED)
+
+        else:
+            return JsonResponse({'message': form.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EditReportView(LoginRequiredMixin, UserPassesTestMixin, generic.TemplateView):
+    login_url="authapp:login"
+    template_name='cvdp/edit_report.html'
+
+    def test_func(self):
+        case = get_object_or_404(Case, case_id=self.kwargs.get('caseid'))
+        return is_case_owner(self.request.user, case.id)
+
+    def get_context_data(self, **kwargs):
+        context = super(EditReportView, self).get_context_data(**kwargs)
+        cform = None
+
+        cform = ReportingForm.objects.all().first()
+        context['current_form'] = cform.get_form()
+
+        case = get_object_or_404(Case, case_id=self.kwargs.get('caseid'))
+        context['case'] = case
+        if case.report:
+            if not case.report.entry:
+                if cform:
+                    #this was probably a transfer
+                    context['transfer'] = True
+                    case.report.entry = FormEntry(form=cform)
+                    case.report.entry.save()
+                    context['form'] = case.report.entry.form.get_form_and_initial(case.report.report)
+            else:
+                if self.request.GET.get('add'):
+                    context['form'] = case.report.entry.form.get_current_form_and_initial(case.report.report)
+                elif case.report.entry.form:
+                    context['form'] = case.report.entry.form.get_form_and_initial(case.report.report)
+                else:
+                    gs = GlobalSettings.objects.all().first()
+                    if gs and gs.use_custom_report:
+                        context['use_custom_form'] = True
+        else:
+            gs = GlobalSettings.objects.all().first()
+            if gs and gs.use_custom_report:
+                context['use_custom_form'] = True
+            else:
+                #adding a report
+                form = ReportingForm.objects.all().first()
+                if (form):
+                    context['form'] = form.get_form()
+                    context['intro'] = form.intro
+            
+        return context
+
+    def post(self, request, *args, **kwargs):
+        logger.debug(f"{self.__class__.__name__} post: {self.request.POST}")
+        case = get_object_or_404(Case, case_id=self.kwargs['caseid'])
+
+        rform = ReportingForm.objects.all().first()
+        if case.report:
+            form = case.report.entry.form.get_form_and_initial(case.report.report, self.request.POST)
+            if form.is_valid():
+                logger.debug(form.cleaned_data)
+                if not case.report.copy:
+                    #we need to make a copy of the original form first
+                    orig = CaseReportOriginal(report = case.report,
+                                              case=case,
+                                              user=self.request.user)
+                    orig.save()
+                pp = rform.get_pretty_answers(form.cleaned_data)
+                logger.debug(pp)
+
+                #get case report
+                if case.report.copy:
+                    case.report.report = pp
+                    case.report.save()
+                else:
+                    cr = CaseReport(entry=case.report.entry,
+                                    report=pp,
+                                    copy=True)
+                    cr.save()
+
+                    case.report = cr
+                    case.save()
+
+                create_case_action("modified report copy", self.request.user, case)
+
+                messages.success(
+                    self.request,
+                    "Got it! A copy of the report will now be available to case recipients."
+                )
+
+                return redirect("cvdp:case", case.case_id)
+            else:
+                logger.debug(f"{self.__class__.__name__} {form.errors}")
+
+            #tODO FIX THIS!
+
+
+
+def generate_report_id():
+    today = datetime.now()
+    random_id = ''.join(random.choice('ABCDEFGHIJKLMNOPQRSTVWXYZ123456789') for _ in range(6))
+    report_id = str(today.year)+ '-'+str(today.month)+'-'+random_id
+    return report_id
+                
+class ReportView(UserPassesTestMixin, generic.TemplateView):
+    template_name = 'cvdp/report.html'
+    login_url="authapp:login"
+    success_url = 'results.html'
+
+    def test_func(self):
+        if self.request.user.is_anonymous:
+            if hasattr(settings, "ALLOW_ANONYMOUS_REPORTS"):
+                if settings.ALLOW_ANONYMOUS_REPORTS:
+                    return True
+            return False
+        return PendingTestMixin.test_func(self)
+
+    def get_context_data(self, **kwargs):
+        context = super(ReportView, self).get_context_data(**kwargs)
+
+        gs = GlobalSettings.objects.all().first()
+        if gs and gs.use_custom_report:
+            context['use_custom_form'] = True
+            
+        form = ReportingForm.objects.all().first()
+        if (form):
+            context['form'] = form.get_form()
+            context['intro'] = form.intro
+
+            """if form.has_subforms():
+                context['formsets'] = []
+                formsets = form.get_subforms()
+                logger.debug(formsets)
+                for index, x in enumerate(formsets):
+                    sf = x.get_sub_form()
+                    logger.debug(sf)
+                    context['formsets'].append(sf)"""
+            context['reportpage'] = 1
+
+        if self.request.user.is_anonymous:
+            context['base_template'] = 'cvdp/report_no_auth.html'
+        else:
+            context['base_template'] = settings.CVDP_BASE_TEMPLATE
+
+        if settings.RECAPTCHA_PUBLIC_KEY:
+            context['recaptcha'] = 1
+        elif settings.TURNSTILE_SITE_KEY:
+            context['turnstile'] = 1
+
+        #generate report id to prevent duplicate submissions 
+        context['report_id'] = generate_report_id()
+            
+        return context
+
+    def form_invalid(self, form):
+        logger.debug("INVALID FORM")
+        logger.debug(f"{self.__class__.__name__} errors: {form.errors}")
+        base_template = settings.CVDP_BASE_TEMPLATE
+        fs = []
+        if self.request.user.is_anonymous:
+            base_template = 'cvdp/report_no_auth.html'
+
+        rform = ReportingForm.objects.all().first()
+        if rform:
+            intro = rform.intro
+            """if rform.has_subforms():
+                formsets = form.get_subforms()
+                logger.debug(formsets)
+                for index, x in enumerate(formsets):
+                    sf = x.get_sub_form()
+                    logger.debug(sf)
+                    fs.append(sf)"""
+            
+        else:
+            intro = "Error Occurred"
+
+        recaptcha = 0
+        turnstile = 0
+        if settings.RECAPTCHA_PUBLIC_KEY:
+            recaptcha = 1
+        elif settings.TURNSTILE_SITE_KEY:
+            turnstile = 1
+
+        #generate report id to prevent duplicate submissions
+        report_id = generate_report_id()
+            
+        return render(self.request, 'cvdp/report.html',
+                      {'form': form,
+                       'intro': intro,
+                       'recaptcha': recaptcha,
+                       'report_id': report_id,
+                       'turnstile': turnstile,
+                       #'formsets': fs,
+                       'base_template': base_template, })
+    
+    def post(self, request, *args, **kwargs):
+        logger.debug(f"{self.__class__.__name__} post: {self.request.POST}, files: {self.request.FILES}")
+        has_subforms = False
+        rform = ReportingForm.objects.all().first()
+
+        form = rform.get_form(self.request.POST, self.request.FILES)
+
+        if form.is_valid():
+            #create form entry
+
+            fe = FormEntry(form=rform)
+            if (self.request.POST.get('report_id')):
+                #confirm we haven't seen this report_id before
+                prevEntry = FormEntry.objects.filter(report_id = self.request.POST.get('report_id')).first()
+                if prevEntry:
+                    form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+                        u'Form has already been submitted. Check \"My Reports\" to view submitted form.'
+		    ])
+                    return self.form_invalid(form)
+                
+                fe.report_id = self.request.POST.get('report_id')
+
+            if self.request.user.is_authenticated:
+                fe.created_by=self.request.user
+            fe.save()
+
+            logger.debug(form.cleaned_data)
+
+            
+            #make the answers
+            pp = rform.get_pretty_answers(form.cleaned_data)
+
+            logger.debug(pp)
+
+            
+            #create case report
+            cr = CaseReport(entry=fe,
+                            report=pp)
+            cr.save()
+
+            new_case_id = generate_case_id()
+            #now create the case
+            case = Case(report= cr,
+                 case_id = new_case_id,
+                 title=f"{rform.title} form entry")
+
+            case.save()
+
+            new_state = CaseState.objects.filter(code = "new").first()
+            action = create_case_action(f"created case {case.caseid}", None, case, state=new_state)
+            
+            for k, v in self.request.FILES.items():
+                artifact = add_artifact(v)
+                action = None
+                if (self.request.user.is_authenticated):
+                    action = create_case_action(f"uploaded file with report", self.request.user, case)
+                    
+                artifact = CaseArtifact(file=artifact,
+                                        case=case,
+                                        action=action)
+                artifact.save()
+                                        
+            
+            #add reporter to Case as reporter
+            if self.request.user.is_authenticated:
+                contact = Contact.objects.filter(user=self.request.user).first()
+                add_new_case_participant(case.official_thread, contact.uuid, self.request.user, "reporter")
+
+            teams = get_coord_teams()
+            if len(teams) == 1:
+                #auto assign lead coord team
+                coord_team = get_lead_coord_team()
+                add_new_case_participant(case.official_thread, coord_team.groupprofile.uuid, None, "owner")
+
+                
+            messages.success(
+                self.request,
+                "Got it! Thanks for your vulnerability report."
+            )
+            if self.request.user.is_authenticated:
+
+                return redirect("cvdp:reports")
+            else:
+                return redirect("authapp:login")
+        else:
+            return self.form_invalid(form)
+
+
+class EditCustomReportAPIView(viewsets.ModelViewSet):
+    serializer_class = ReportSerializer
+    permission_classes = (IsAuthenticated, PendingUserPermission, CaseOwnerWritePermission)
+
+    def create(self, request, *args, **kwargs):
+        logger.debug(f"{self.__class__.__name__} post: {self.request.data}")
+        serializer = self.serializer_class(data=request.data)
+        case = get_object_or_404(Case, case_id=self.kwargs['caseid'])
+        
+        if serializer.is_valid():    
+            report = request.data['report']
+            title = f"Vul Report for {case.case_id}"
+            if type(report) is str:
+                try:
+                    report = json.loads(report)
+                except (ValueError, TypeError) as e:
+                    return Response({'detail': 'report is invalid. Expected JSON array.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if not(type(report) is list):
+                return Response({'detail': 'report is invalid. Should be an array of question and answer objects.'}, status=status.HTTP_400_BAD_REQUEST)
+            for x in report:
+                if (x.get('question') == "Report Title"):
+                    title = x.get('answer')
+                if not(x.get('question') and x.get('answer')):
+                    logger.debug(x)
+                    return Response({'detail': 'invalid format for report. Should be an array of question and answer objects.'}, status=status.HTTP_400_BAD_REQUEST)
+            if case.report and not case.report.copy:
+                #we need to make a copy of the original form first                                                                                
+                orig = CaseReportOriginal(report = case.report,
+                                          case=case,
+                                          user=self.request.user)
+                orig.save()
+
+            if not case.report:
+                #user is adding a report to this existing case
+                #create form entry                                                                                                                        
+                fe = FormEntry(created_by=self.request.user, title=title)
+                fe.save()
+
+                cr = CaseReport(entry=fe,
+                                report=report)
+                cr.save()
+                case.report = cr
+                case.save()
+                create_case_action("added case report", self.request.user, case)
+
+            else:
+                
+                #get case report
+                if case.report.copy:
+                    case.report.report = report
+                    case.report.save()
+                else:
+                    cr = CaseReport(entry=case.report.entry,
+	                            report=report,
+                                    copy=True)
+                    cr.save()
+
+                    case.report = cr
+                    case.save()
+                    create_case_action("modified report copy", self.request.user, case)
+
+
+            return Response({}, status=status.HTTP_202_ACCEPTED)
+        else:
+
+            logger.debug(serializer.errors)
+
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+
+    
+        
+
+class CustomReportAPIView(viewsets.ModelViewSet):
+    serializer_class = ReportSerializer
+    #permission_classes = (IsAuthenticated, PendingUserPermission)
+    
+    def create(self, request, *args, **kwargs):
+        logger.debug(f"{self.__class__.__name__} post: {self.request.data}")
+
+        token = request.data.get('token', None)
+        if token and getattr(settings, "RECAPTCHA_PUBLIC_KEY", None):
+            if not validate_recaptcha(token):
+                return Response({'detail': 'Invalid ReCAPTCHA. Please try again'}, status=status.HTTP_400_BAD_REQUEST)
+        elif token and getattr(settings, "TURNSTILE_SITE_KEY", None):
+            if not validate_turnstile(token):
+                return Response({'detail': 'Invalid Turnstile Verification. Please try again'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.serializer_class(data=request.data)
+        title = "New Case Request"
+        if serializer.is_valid():
+            report = request.data['report']
+            if type(report) is str:
+                try:
+                    report = json.loads(report)
+                except (ValueError, TypeError) as e:
+                    return Response({'detail': 'report is invalid. Expected JSON array.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if not(type(report) is list):
+                return Response({'detail': 'report is invalid. Should be an array of question and answer objects.'}, status=status.HTTP_400_BAD_REQUEST)
+            for x in report:
+                if (x.get('question') == "Report Title"):
+                    title = x.get('answer')
+                if not(x.get('question') and x.get('answer')):
+                    logger.debug(x)
+                    return Response({'detail': 'invalid format for report. Should be an array of question and answer objects.'}, status=status.HTTP_400_BAD_REQUEST)
+                
+                
+            formEntry = FormEntry(title=title)
+            if (self.request.user.is_authenticated):
+                formEntry.created_by = self.request.user
+
+            if (request.data.get('report_id')):
+                #confirm we haven't seen this report_id before
+                prevEntry = FormEntry.objects.filter(report_id = request.data.get('report_id')).first()
+                if prevEntry:
+                    return Response({'detail': "Form has already been submitted. Check \"My Reports\" to view submitted form."}, status=status.HTTP_400_BAD_REQUEST)
+                
+                formEntry.report_id = request.data.get('report_id')
+                
+            formEntry.save()
+            
+            cr = CaseReport(report=report,
+                            entry=formEntry)
+                            
+            cr.save()
+
+            new_case_id = generate_case_id()
+            #now create the case
+            case = Case(report= cr,
+                        case_id = new_case_id,
+                        title=title)
+
+            case.save()
+
+            new_state = CaseState.objects.filter(code = "new").first()
+            action = create_case_action(f"created case {case.caseid}", None, case, state=new_state)
+            
+            for k, v in self.request.FILES.items():
+                artifact = add_artifact(v)
+                action = None
+                if (self.request.user.is_authenticated):
+                    action = create_case_action(f"uploaded file with report", self.request.user, case)
+                    
+                artifact = CaseArtifact(file=artifact,
+                                        case=case,
+                                        action=action)
+                artifact.save()
+                                        
+            
+            #add reporter to Case as reporter
+            if self.request.user.is_authenticated:
+                contact = Contact.objects.filter(user=self.request.user).first()
+                add_new_case_participant(case.official_thread, contact.uuid, self.request.user, "reporter")
+
+            teams = get_coord_teams()
+            if len(teams) == 1:
+                #auto assign lead coord team
+                coord_team = get_lead_coord_team()
+                add_new_case_participant(case.official_thread, coord_team.groupprofile.uuid, None, "owner")
+
+                
+            messages.success(
+                self.request,
+                "Got it! Thanks for your vulnerability report."
+            )
+
+            if self.request.user.is_authenticated:
+
+                create_case_action(f"submitted report", self.request.user, case)
+            
+            return Response({'case_id': new_case_id, 'status': 'Pending'}, status=status.HTTP_202_ACCEPTED)
+        else:
+            logger.debug(serializer.errors)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+

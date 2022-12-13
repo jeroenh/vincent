@@ -1,0 +1,84 @@
+{% load post_tags crispy_forms_tags user_tags%}
+  {% if object.user %} 
+{% if object.user.pending %}
+<div class="row" id="pendingwarning">
+  <div class="col-lg-12">
+    <div class="alert alert-warning">
+      <p>This user is in pending mode.</p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if object.user.is_active %}{% else %}
+<div class="alert alert-danger">This user is inactive</div>
+{% endif %}
+
+{% if object.user.api_account %}
+<b>This is an API service account.</b><br/>
+{% endif %}
+<h5>User:{% if object.user.screen_name %} {{ object.user.screen_name }} {% else %} {{ object.email }} {% endif %}</h5>	  
+<div class="row">
+  <div class="col-lg-12">
+    <b>Full Name:</b>  {{ object.user.get_full_name }}<br/>
+    <b>Email:</b>   {{ object.user.email }}<br/>
+    <b>Organization:</b>  {{ object.user.org }}<br/>
+    <b>Title:</b>   {{ object.user.title }}<br/>
+    <b>Groups:</b>   {{ object.user.groups.all|join:", " }}<br/>
+    <b>Associations:</b>
+    {% if associations %}
+    <br/>
+    <ul>
+      {% for a in associations %}
+      <li>Added to <a href="{% url 'cvdp:group' a.group.groupprofile.uuid %}">{{ a.group.name }}</a> on {{ a.created|date:"Y-m-d" }} {% if a.verified %}<span class="badge rounded-pill bg-success">VERIFIED</span>{% else %}<span class="badge rounded-pill bg-warning">NOT VERIFIED</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <br/>
+    {% endif %}
+    
+    <b>Last Login:</b>   {{ object.user.last_login }}<br/>
+    {% if object.user.userprofile.service %}
+    <b>MFA Enabled:</b> Not required <br/>
+    {% elif object.user.has_usable_password %}
+    <b>MFA Enabled:</b> {% if object.user|mfa_set %}Yes{% else %}No{% endif %} <br/>
+    {% endif %}
+    <b>Account Provider:</b> {% for x in object.user.socialaccount_set.all %}
+    <span class="badge rounded-pill bg-primary p-2">{{ x.provider }}</span>
+    {% endfor %}
+    {% if object.user.has_usable_password %}
+    <span class="badge rounded-pill bg-primary p-2">LOCAL</span>
+    {% endif %}
+    
+    <div class="button-group mt-3">
+      {% if object.user|mfa_set %}
+      <a id="resetmfa" href="{% url 'authapp:reset_mfa' object.user.id %}"><button class="btn btn-sm btn-warning">MFA Reset</button></a>
+      {% endif %}
+      <!--<a href=""><button class="btn btn-sm btn-primary">Email User</button></a>-->
+    </div>
+  </div>
+</div>
+  {% else %}
+<div>
+  <a class="btn btn-danger btn-sm mb-3" confirm_action="{% url 'cvdp:searchgroups' %}" id="rmcontact" href="{% url 'cvdp:contactapi-detail' object.id %}">Remove Contact</a>
+</div>
+<div>
+{% if object.name %}
+<b>Name: </b> {{ object.name }}<br/>
+{% endif %}
+<b>Email:</b>   {{ object.email }}<br/>
+{% if objet.phone %}
+<b>Phone:</b>   {{ object.phone }}<br/>
+{% endif %}
+<b>Associations:</b>   <br/>
+<ul>
+  {% for a in associations %}
+  <li>Added to <a href="{% url 'cvdp:group' a.group.groupprofile.uuid %}">{{ a.group.name }}</a> on {{ a.created|date:"Y-m-d" }} {% if a.verified %}VERIFIED{% else %}NOT VERIFIED{% endif %}</li>
+  {% endfor %}
+</ul>
+
+</div>
+
+  {% endif %}
+  
+

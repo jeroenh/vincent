@@ -1,0 +1,36 @@
+{% extends CVDP_BASE_TEMPLATE %}{% load i18n %}
+<!-- site-title  -->
+{% block title %}{% trans "VINCE-NT Inbox" %}{% endblock %}
+{% load user_tags %}
+{% load render_bundle from webpack_loader %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks crispy_forms_tags %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+
+  {% if team %}{% else %}
+  <div class="alert alert-danger">VINCE-NT is improperly configured. Please select coordination team owner in admin settings.</div>
+  {% endif %}
+  
+  <div id="app" {% if user|coordinator %}val="coord"{% else %}val="user"{% endif %}groups="{{user.groups.all|length}}"></div>
+  {% if contact and user|coordinator %}
+  {{ contact|json_script:"contact"}}
+  {% endif %}
+
+  {{ contact_reasons|json_script:"reasons"}}
+  
+  {% if message %}
+  <div id="message" val="{{ message }}" class="hidden"></div>
+  <div id="page" val="{{page}}" class="hidden"></div>
+  {% if activetab %}<div id="activetab" val="{{ activetab }}"></div>{% endif %}
+  {% endif %}
+
+  <div id="bounce_template">{{ bounce_template }}</div> 
+  
+</div>
+{% render_bundle 'vincent' %}
+{% endblock %}
+  
+  
+  

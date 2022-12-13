@@ -1,0 +1,18 @@
+{% extends CVDP_BASE_TEMPLATE %}
+{% load render_bundle from webpack_loader %}
+{% load i18n %}
+{% load static %}
+{% block js %}
+{{ block.super }}
+{% endblock %}
+{% block title %}{% trans "VINCE-NT Components" %}{% endblock %}
+{% block content %}
+
+<div class="container-fluid flex-grow-1 container-p-y">
+
+  <div id="app" group="{{group.groupprofile.uuid}}"></div>
+
+</div>
+{% render_bundle 'vincent' %}
+{% endblock %}
+

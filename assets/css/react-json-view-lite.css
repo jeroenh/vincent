@@ -1,0 +1,16 @@
+
+.json-container {
+    background: var(--bs-body-font-family);
+}
+
+
+.json-label, .json-punctuation {
+    color: #566a7f;
+    font-weight: 500;
+}
+
+
+.json-value {
+    color: #566a7f;
+}
+    
