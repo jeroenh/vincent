@@ -1,7 +1,7 @@
 ##############################################################################
 ## node artifact build
 ##############################################################################
-FROM node:24 as build-node
+FROM node:24 AS build-node
 
 #RUN addgroup -S vincent && \
 #    adduser -S vincent -G vincent && \
@@ -36,7 +36,7 @@ RUN npm run build
 ##############################################################################
 ## django artifact build
 ##############################################################################
-FROM python:3.12-alpine as build-django
+FROM python:3.12-alpine AS build-django
 
 RUN pip install --upgrade --no-cache-dir pip && \
     mkdir -p /home/vincent/app && \
