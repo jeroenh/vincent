@@ -67,28 +67,31 @@ You should see five containers running:
 - docker-nginx-1
 - docker-vincent-worker-1
 
+
 ### IV. Set up an OAuth2 Application
-The dev/test environment includes a local OAuth2 provider. To use it, 
+The dev/test environment includes a local OAuth2 provider. To use it,
 you will need to set up an application in it.
+
 1. Point a web browser at http://auth.vincent.test:8000
 2. Log in using the username and password entered for `DJANGO_SUPERUSER_*`
-in the .env.test.local file. You will need to complete MFA setup for the 
+in the .env.test.local file. You will need to complete MFA setup for the
 superuser account to complete login.
 3. On the portal page, click the "Admin" button to go to the OAuth admin site.
 4. Go to Sites->Sites.
-5. Select "example.com" to edit it.
-6. For domain name, enter "auth.vincent.test". For display name, use "VINCE-NT". Save.
+   1. Select "example.com" to edit it.
+   2. For domain name, enter "auth.vincent.test". For display name, use "VINCE-NT".
+   3. Save.
 7. Under "Django OAuth Toolkit", choose "Applications", then "Add Application".
-8. In the "User" field, enter `1` (this is the id of the superuser).
-9. In "Redirect uris", enter: `http://app.vincent.test:8000/accounts/adviseprovider/login/callback/`
-10. Choose "Confidential" for client type.
-11. Choose "Authorization code" for grant type.
-12. Enter a useful name, such as `local_provider`.
-13. Leave "Algorithm" and "Skip authorization" as they are.
-14. **IMPORTANT**: Copy the client secret and client id from this page and 
-put it somewhere temporarily. It will be needed in a later step. 
-15. After you have copied and temporarily stored the client id and secret, 
-click "Save". 
+   1. User: enter `1` (this is the id of the superuser).
+   2. Redirect uris: `http://app.vincent.test:8000/accounts/adviseprovider/login/callback/`
+   3. Client type: choose "Confidential"
+   4. Authorization grant type: choose "Authorization code"
+   5. Name: Enter a useful name, such as `local_provider`.
+   5. Leave "Algorithm" and "Skip authorization" as they are.
+   6. **IMPORTANT**: Copy the client secret and client id from this page and
+      put it somewhere temporarily. It will be needed in a later step.
+   7. After you have copied and temporarily stored the client id and secret,
+      click "Save".
 16. Click "logout" to log out of the OAuth2 Provider.
 17. Point your web browser back at http://auth.vincent.test:8000
 18. Register for a new account and complete the form.
@@ -97,45 +100,49 @@ click "Save".
 1. Point a web browser at http://app.vincent.test:8000
 2. Log in using the username and password entered for `DJANGO_SUPERUSER_*`
 in the .env.test.local file.
-3. Upon first login, you will be asked to confirm your email. To do this, 
-look at the console output for the docker containers. You should see the 
-contents of the confirmation email printed to the console. Copy and paste 
+3. Upon first login, you will be asked to confirm your email. To do this,
+look at the console output for the docker containers. You should see the
+contents of the confirmation email printed to the console. Copy and paste
 the link into a web browser to confirm your email address.
-4. You will then be asked to set up MFA. Follow the prompts to do this.
+4. You will then be asked to set up MFA. (This is a different MFA from the auth.vincent.test:8000 account) Follow the prompts to do this.
+5. Save the recovery codes somewhere securely.
 5. In the top right corner, click the avatar button and select Admin to
 navigate to the admin site.
 6. Go to Authapp->Users.
-7. Select the superuser account.
-8. Ensure that the "is coordinator" checkbox is selected.
-9. Save.
+   1. Select the superuser account.
+   2. Ensure that the "is coordinator" checkbox is selected (you may have to scroll down).
+   3. Save.
 10. Go to Sites->Sites.
-11. Select "example.com" to edit it.
-12. For domain name, enter "http://app.vincent.test:8000
-13. For display name, enter the same URL as above.
-14. Save.
+    1. Select "example.com" to edit it.
+    2. For domain name, enter "http://app.vincent.test:8000
+    3. For display name, enter the same URL as above.
+    4. Save.
 15. Go to Social Accounts->Social Applications
-16. Click to add a Social Application. We are going to connect to the OAuth2 
-provider we created above.
-17. For Provider, choose "AdVISE Provider"
-18. Provide a helpful name, like "local_provider".
-19. Enter the client ID and secret copied from above. Leave the "key" field blank.
-20. Add the `app.advise.test` site to the chosen sites list. 
-21. Click Save.
+    1. Click to add a Social Application. We are going to connect to the OAuth2
+provider we created in step IV above.
+    2. For Provider, choose "AdVISE Provider"
+    3. Provide a helpful name, like "local_provider".
+    4. Enter the client ID and secret that we saved in step IV above.
+    5. Leave the "key" field blank.
+    6. Add the `app.advise.test` site to the chosen sites list.
+    7. Click Save.
 22. Click Log Out (top right).
 
 ### VI. Verify Authentication
 1. Point a web browser at http://app.vincent.test:8000
-2. Log in using the username you registered during the OAuth2 setup step.
-3. At the second auth prompt, choose to log in with the AdVISE Provider.
-4. Enter your username and password.
+2. Click "Login"
+3. Don't use the form, but select the "AdVise Provider" at the bottom.
+7. Authorize local_provider as requested.
+2. Log in using the username you registered at the end of step IV (the OAuth2 setup step).
 5. Set up MFA.
 6. You will also be asked to confirm your email. To do this, look at the console
 output for the docker containers. You should see the contents of the confirmation
-email printed to the console. Copy and paste the link into a web browser to 
+email printed to the console. Copy and paste the link into a web browser to
 confirm your email address.
 7. Authorize local_provider as requested.
 8. Authorization should succeed and you will be logged in.
-9. Click logout (top right drop-down menu). 
+9. Click logout (top right drop-down menu).
+
 
 ### VII. Optional Steps
   * Log into the app as the superuser, go to the Admin section, and edit the
