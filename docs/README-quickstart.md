@@ -71,15 +71,16 @@ You should see five containers running:
 ### IV. Set up an OAuth2 Application
 The dev/test environment includes a local OAuth2 provider. To use it,
 you will need to set up an application in it.
+
 1. Point a web browser at http://auth.vincent.test:8000
 2. Log in using the username and password entered for `DJANGO_SUPERUSER_*`
 in the .env.test.local file. You will need to complete MFA setup for the
 superuser account to complete login.
 3. On the portal page, click the "Admin" button to go to the OAuth admin site.
 4. Go to Sites->Sites.
-   5. Select "example.com" to edit it.
-   6. For domain name, enter "auth.vincent.test". For display name, use "VINCE-NT".
-   7. Save.
+   1. Select "example.com" to edit it.
+   2. For domain name, enter "auth.vincent.test". For display name, use "VINCE-NT".
+   3. Save.
 7. Under "Django OAuth Toolkit", choose "Applications", then "Add Application".
    8. User: enter `1` (this is the id of the superuser).
    9. Redirect uris: `http://app.vincent.test:8000/accounts/adviseprovider/login/callback/`
