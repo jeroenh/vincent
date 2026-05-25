@@ -82,16 +82,16 @@ superuser account to complete login.
    2. For domain name, enter "auth.vincent.test". For display name, use "VINCE-NT".
    3. Save.
 7. Under "Django OAuth Toolkit", choose "Applications", then "Add Application".
-   8. User: enter `1` (this is the id of the superuser).
-   9. Redirect uris: `http://app.vincent.test:8000/accounts/adviseprovider/login/callback/`
-   10. Client type: choose "Confidential"
-   11. Authorization grant type: choose "Authorization code"
-   12. Name: Enter a useful name, such as `local_provider`.
-   13. Leave "Algorithm" and "Skip authorization" as they are.
-   14. **IMPORTANT**: Copy the client secret and client id from this page and
-   put it somewhere temporarily. It will be needed in a later step.
-   15. After you have copied and temporarily stored the client id and secret,
-   click "Save".
+   1. User: enter `1` (this is the id of the superuser).
+   2. Redirect uris: `http://app.vincent.test:8000/accounts/adviseprovider/login/callback/`
+   3. Client type: choose "Confidential"
+   4. Authorization grant type: choose "Authorization code"
+   5. Name: Enter a useful name, such as `local_provider`.
+   5. Leave "Algorithm" and "Skip authorization" as they are.
+   6. **IMPORTANT**: Copy the client secret and client id from this page and
+      put it somewhere temporarily. It will be needed in a later step.
+   7. After you have copied and temporarily stored the client id and secret,
+      click "Save".
 16. Click "logout" to log out of the OAuth2 Provider.
 17. Point your web browser back at http://auth.vincent.test:8000
 18. Register for a new account and complete the form.
@@ -109,23 +109,23 @@ the link into a web browser to confirm your email address.
 5. In the top right corner, click the avatar button and select Admin to
 navigate to the admin site.
 6. Go to Authapp->Users.
-   7. Select the superuser account.
-   8. Ensure that the "is coordinator" checkbox is selected (you may have to scroll down).
-   9. Save.
+   1. Select the superuser account.
+   2. Ensure that the "is coordinator" checkbox is selected (you may have to scroll down).
+   3. Save.
 10. Go to Sites->Sites.
-    11. Select "example.com" to edit it.
-    12. For domain name, enter "http://app.vincent.test:8000
-    13. For display name, enter the same URL as above.
-    14. Save.
+    1. Select "example.com" to edit it.
+    2. For domain name, enter "http://app.vincent.test:8000
+    3. For display name, enter the same URL as above.
+    4. Save.
 15. Go to Social Accounts->Social Applications
-    16. Click to add a Social Application. We are going to connect to the OAuth2
+    1. Click to add a Social Application. We are going to connect to the OAuth2
 provider we created in step IV above.
-    17. For Provider, choose "AdVISE Provider"
-    18. Provide a helpful name, like "local_provider".
-    19. Enter the client ID and secret that we saved in step IV above.
-    20. Leave the "key" field blank.
-    20. Add the `app.advise.test` site to the chosen sites list.
-    21. Click Save.
+    2. For Provider, choose "AdVISE Provider"
+    3. Provide a helpful name, like "local_provider".
+    4. Enter the client ID and secret that we saved in step IV above.
+    5. Leave the "key" field blank.
+    6. Add the `app.advise.test` site to the chosen sites list.
+    7. Click Save.
 22. Click Log Out (top right).
 
 ### VI. Verify Authentication
