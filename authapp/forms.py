@@ -163,6 +163,8 @@ class AdviseSignUpForm(SignupForm):
                              })
         resp = req_object.json()
         if resp['success']:
+            if not 'score' in resp.keys(): # test instance does not return score
+                return self.cleaned_data
             if resp['score'] > settings.RECAPTCHA_SUCCESS_SCORE:
                 return self.cleaned_data
         raise forms.ValidationError(_('Invalid ReCAPTCHA. Please try again.'))
